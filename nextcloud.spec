@@ -9,7 +9,7 @@
 Summary:	Private file sync and share server
 Name:		nextcloud
 Version:	11.0.3
-Release:	1
+Release:	2
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
 Source1:	apache.example.conf
 Source100:	%{name}.rpmlintrc
@@ -62,8 +62,8 @@ with other people.
 %attr(-,apache,apache) %{_datadir}/%{name}
 # Not sure if this is useful...
 %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/.htaccess
-%config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/apache.example.conf
-%config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/config.sample.php
+%config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
+%config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.config.sample.php
 %{_sysconfdir}/pki/%{name}/*.pem
 #--------------------------------------------------------------------
 
@@ -88,12 +88,12 @@ find %{buildroot} -size 0 -delete
 
 # move config to /etc
 mkdir -p %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d
-mv %{buildroot}%{_datadir}/%{name}/config/config.sample.php %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d
+mv %{buildroot}%{_datadir}/%{name}/config/config.sample.php %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name}.config.sample.php
 # Not sure if this is useful...
 mv %{buildroot}%{_datadir}/%{name}/config/.htaccess %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d
 
 # install apache config file
-install -m 644 %{SOURCE1}  %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d
+install -m 644 %{SOURCE1}  %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
 
 
 # fix some attr
