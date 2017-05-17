@@ -1,0 +1,13 @@
+addFilter("E: htaccess-file")
+# apache uid and gid
+addFilter("W: non-standard-gid")
+addFilter("W: non-standard-uid")
+addFilter("W: symlink-should-be-relative")
+addFilter("E: non-standard-dir-perm")
+addFilter("E: non-readable")
+addFilter("W: non-executable-script")
+addFilter("W: non-conffile-in-etc")
+addFilter("W: hidden-file-or-dir")
+addFilter("W: dangling-symlink")
+addFilter("W: pem-certificate") 
+addFilter("E: explicit-lib-dependency")
