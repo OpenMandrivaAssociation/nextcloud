@@ -9,7 +9,7 @@
 Summary:	Private file sync and share server
 Name:		nextcloud
 Version:	11.0.3
-Release:	2
+Release:	3
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
 Source1:	apache.example.conf
 Source100:	%{name}.rpmlintrc
