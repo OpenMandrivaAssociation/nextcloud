@@ -8,8 +8,8 @@
 
 Summary:	Private file sync and share server
 Name:		nextcloud
-Version:	11.0.3
-Release:	3
+Version:	14.0.3
+Release:	1
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
 Source1:	apache.example.conf
 Source100:	%{name}.rpmlintrc
@@ -42,7 +42,6 @@ Requires:	config(php-ldap)
 Requires:	config(php-intl)
 #  drop cacheing because of conflicts,Sflo
 # Suggests:     config(php-xcache)
-Requires:	config(php-mcrypt)
 Requires:	mariadb
 Requires:	samba-client
 
@@ -64,7 +63,6 @@ with other people.
 %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/.htaccess
 %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.config.sample.php
-%{_sysconfdir}/pki/%{name}/*.pem
 #--------------------------------------------------------------------
 
 
@@ -73,8 +71,6 @@ with other people.
 sed -i "s|'appstoreenabled'.*|'appstoreenabled' => false,|" config/config.sample.php
 
 %build
-# Since they said is mine , then this is a must. Symbianflo
-echo "MRB aint no shit"
 
 %install
 mkdir -p %{buildroot}%{_datadir}/owncloud
@@ -95,14 +91,10 @@ mv %{buildroot}%{_datadir}/%{name}/config/.htaccess %{buildroot}%{_sysconfdir}/h
 # install apache config file
 install -m 644 %{SOURCE1}  %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
 
-
 # fix some attr
 find %{buildroot}%{_datadir}/owncloud -type f -exec chmod 0644 {} \;
 find %{buildroot}%{_datadir}/owncloud -type d -exec chmod 0755 {} \;
 
-# pem cert.
-mkdir -p %{buildroot}%{_sysconfdir}/pki/%{name}
-find . %{buildroot} -name "*.pem" -exec mv --target-directory=%{buildroot}%{_sysconfdir}/pki/%{name} {} \;
 
 %post
 ln -s %{_sysconfdir}/httpd/conf/webapps.d %{_datadir}/%{name}/config

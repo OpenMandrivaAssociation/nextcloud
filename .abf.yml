@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   nextcloud-11.0.3.tar.bz2: 0364b3eb268362d7dee6c04ea7bd73b4b2c38c22
+sources:
+  nextcloud-14.0.3.tar.bz2: de6876c9b615faaeb9210ca777c11a9b01a889e7
