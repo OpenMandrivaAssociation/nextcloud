@@ -73,7 +73,7 @@ sed -i "s|'appstoreenabled'.*|'appstoreenabled' => false,|" config/config.sample
 %build
 
 %install
-mkdir -p %{buildroot}%{_datadir}/owncloud
+mkdir -p %{buildroot}%{_datadir}
 (
 cd %{buildroot}%{_datadir}
 tar xjf %{SOURCE0}
@@ -92,8 +92,8 @@ mv %{buildroot}%{_datadir}/%{name}/config/.htaccess %{buildroot}%{_sysconfdir}/h
 install -m 644 %{SOURCE1}  %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
 
 # fix some attr
-find %{buildroot}%{_datadir}/owncloud -type f -exec chmod 0644 {} \;
-find %{buildroot}%{_datadir}/owncloud -type d -exec chmod 0755 {} \;
+find %{buildroot}%{_datadir}/nextcloud -type f -exec chmod 0644 {} \;
+find %{buildroot}%{_datadir}/nextcloud -type d -exec chmod 0755 {} \;
 
 
 %post
