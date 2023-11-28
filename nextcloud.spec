@@ -58,7 +58,7 @@ with other people.
 
 %files
 %doc AUTHORS 
-%attr(-,apache,apache) %{_datadir}/%{name}
+%attr(-,www,www) %{_datadir}/%{name}
 # Not sure if this is useful...
 %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/.htaccess
 %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
@@ -67,7 +67,7 @@ with other people.
 
 
 %prep
-%setup -qn %{name}
+%autosetup -p1 -n %{name}
 sed -i "s|'appstoreenabled'.*|'appstoreenabled' => false,|" config/config.sample.php
 
 %build
