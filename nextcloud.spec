@@ -9,18 +9,16 @@
 Summary:	Private file sync and share server
 Name:		nextcloud
 Version:	28.0.1
-Release:	1
+Release:	2
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
 Source1:	apache.example.conf
+Source2:	nextcloud.conf
 Source100:	%{name}.rpmlintrc
 
 License:	AGPLv3
 Group:		Monitoring
 Url:		http://nextcloud.com/
 
-# apache
-Requires:	config(apache-base)
-Requires:	config(apache-mod_php)
 # perl
 Requires:	perl(Locale::PO)
 Requires:	perl(Cwd)
@@ -56,48 +54,54 @@ A personal cloud server which runs on you personal server
 and enables accessing your data from everywhere and sharing 
 with other people.
 
+%package apache
+Summary:	Configuration files etc. for running NextCloud with the Apache web server
+Group:		Servers
+# apache
+Requires:	config(apache-base)
+Requires:	config(apache-mod_php)
+
+%description apache
+Configuration files etc. for running NextCloud with the Apache web server
+
+%files apache
+%config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
+
+%package nginx
+Summary:	Configuration files etc. for running NextCloud with the NGINX web server
+Group:		Servers
+
+%description nginx
+Configuration files etc. for running NextCloud with the NGINX web server
+
+%files nginx
+%{_sysconfdir}/nginx/nextcloud.conf
+
 %files
 %doc AUTHORS 
-%attr(-,www,www) %{_datadir}/%{name}
-# Not sure if this is useful...
-%config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/.htaccess
-%config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
-%config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.config.sample.php
+%attr(-,www,www) /srv/%{name}
 #--------------------------------------------------------------------
 
 
 %prep
 %autosetup -p1 -n %{name}
-sed -i "s|'appstoreenabled'.*|'appstoreenabled' => false,|" config/config.sample.php
 
 %build
 
 %install
-mkdir -p %{buildroot}%{_datadir}
+mkdir -p %{buildroot}/srv
 (
-cd %{buildroot}%{_datadir}
-tar xjf %{SOURCE0}
+cd %{buildroot}/srv
+tar xf %{S:0}
 )
 
-# clean zero lenght
-find %{buildroot} -size 0 -delete
-
-# move config to /etc
-mkdir -p %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d
-mv %{buildroot}%{_datadir}/%{name}/config/config.sample.php %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name}.config.sample.php
-# Not sure if this is useful...
-mv %{buildroot}%{_datadir}/%{name}/config/.htaccess %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d
-
 # install apache config file
-install -m 644 %{SOURCE1}  %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
+install -D -m 644 %{S:1}  %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
+
+# NGINX config file
+mkdir -p %{buildroot}%{_sysconfdir}/nginx
+install -D -m 644 %{S:2} %{buildroot}%{_sysconfdir}/nginx/nextcloud.conf
 
 # fix some attr
-find %{buildroot}%{_datadir}/nextcloud -type f -exec chmod 0644 {} \;
-find %{buildroot}%{_datadir}/nextcloud -type d -exec chmod 0755 {} \;
-
-
-%post
-ln -s %{_sysconfdir}/httpd/conf/webapps.d %{_datadir}/%{name}/config
-
-%postun
-rm -Rf %{_datadir}/%{name}/config
+find %{buildroot}/srv/nextcloud -type f -exec chmod 0644 {} \;
+find %{buildroot}/srv/nextcloud -type d -exec chmod 0755 {} \;
