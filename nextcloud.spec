@@ -26,8 +26,9 @@ Requires:	perl(Data::Dumper)
 Requires:	perl(File::Basename)
 Requires:	perl(File::Path)
 Requires:	perl(Locale::PO)
-#php
+# CLI is required for the cron jobs/timers
 Requires:	php-cli >= 4.1
+# php libs
 Requires:	config(php-zip)
 Requires:	config(php-mbstring)
 Requires:	config(php-gd)
@@ -38,9 +39,11 @@ Requires:	config(php-pdo_sqlite)
 Requires:	config(php-pgsql)
 Requires:	config(php-ldap)
 Requires:	config(php-intl)
+# sqlite is sufficient, but Postgres or MariaDB/MySQL are preferred
+# for real world workloads
+Recommends:	(config(php-pdo_pgsql) or config(php-pdo_mysql))
 #  drop cacheing because of conflicts,Sflo
 # Suggests:     config(php-xcache)
-Requires:	mariadb
 Requires:	samba-client
 
 # files preview
@@ -70,6 +73,8 @@ Configuration files etc. for running NextCloud with the Apache web server
 %package nginx
 Summary:	Configuration files etc. for running NextCloud with the NGINX web server
 Group:		Servers
+Requires:	nginx
+Requires:	php-nginx
 
 %description nginx
 Configuration files etc. for running NextCloud with the NGINX web server
@@ -80,6 +85,8 @@ Configuration files etc. for running NextCloud with the NGINX web server
 %files
 %doc AUTHORS 
 %attr(-,www,www) /srv/%{name}
+%{_unitdir}/nextcloudcron.service
+%{_unitdir}/nextcloudcron.timer
 #--------------------------------------------------------------------
 
 
@@ -101,6 +108,33 @@ install -D -m 644 %{S:1}  %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name
 # NGINX config file
 mkdir -p %{buildroot}%{_sysconfdir}/nginx
 install -D -m 644 %{S:2} %{buildroot}%{_sysconfdir}/nginx/nextcloud.conf
+
+# Timers
+mkdir -p %{buildroot}%{_unitdir}
+
+cat >%{buildroot}%{_unitdir}/nextcloudcron.service <<EOF
+[Unit]
+Description=Nextcloud cron.php job
+
+[Service]
+User=www-data
+ExecCondition=/usr/bin/php -f /srv/nextcloud/occ status -e
+ExecStart=/usr/bin/php -f /srv/nextcloud/cron.php
+KillMode=process
+EOF
+
+cat >%{buildroot}%{_unitdir}/nextcloudcron.timer <<EOF
+[Unit]
+Description=Run Nextcloud cron.php every 5 minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+Unit=nextcloudcron.service
+
+[Install]
+WantedBy=timers.target
+EOF
 
 # fix some attr
 find %{buildroot}/srv/nextcloud -type f -exec chmod 0644 {} \;
