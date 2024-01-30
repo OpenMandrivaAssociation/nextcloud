@@ -42,6 +42,7 @@ Requires:	config(php-ldap)
 Requires:	config(php-intl)
 Recommends:	php-bz2
 Recommends:	php-gmp
+Recommends:	php-bcmath
 # sqlite is sufficient, but Postgres or MariaDB/MySQL are preferred
 # for real world workloads
 Recommends:	(config(php-pdo_pgsql) or config(php-pdo_mysql))
