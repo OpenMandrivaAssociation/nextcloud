@@ -124,7 +124,7 @@ cat >%{buildroot}%{_unitdir}/nextcloudcron.service <<EOF
 Description=Nextcloud cron.php job
 
 [Service]
-User=www-data
+User=www
 ExecCondition=/usr/bin/php -f /srv/nextcloud/occ status -e
 ExecStart=/usr/bin/php -f /srv/nextcloud/cron.php
 KillMode=process
