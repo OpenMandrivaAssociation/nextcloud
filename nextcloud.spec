@@ -9,10 +9,11 @@
 Summary:	Private file sync and share server
 Name:		nextcloud
 Version:	28.0.1
-Release:	2
+Release:	3
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
 Source1:	apache.example.conf
 Source2:	nextcloud.conf
+Source3:	nextcloud-subdir.conf
 Source100:	%{name}.rpmlintrc
 
 License:	AGPLv3
@@ -81,6 +82,7 @@ Configuration files etc. for running NextCloud with the NGINX web server
 
 %files nginx
 %{_sysconfdir}/nginx/nextcloud.conf
+%{_sysconfdir}/nginx/nextcloud-subdir.conf
 
 %files
 %doc AUTHORS 
@@ -108,6 +110,7 @@ install -D -m 644 %{S:1}  %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name
 # NGINX config file
 mkdir -p %{buildroot}%{_sysconfdir}/nginx
 install -D -m 644 %{S:2} %{buildroot}%{_sysconfdir}/nginx/nextcloud.conf
+install -D -m 644 %{S:3} %{buildroot}%{_sysconfdir}/nginx/nextcloud-subdir.conf
 
 # Timers
 mkdir -p %{buildroot}%{_unitdir}
