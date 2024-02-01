@@ -8,8 +8,8 @@
 
 Summary:	Private file sync and share server
 Name:		nextcloud
-Version:	28.0.1
-Release:	3
+Version:	28.0.2
+Release:	1
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
 Source1:	apache.example.conf
 Source2:	nextcloud.conf
