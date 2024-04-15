@@ -8,7 +8,7 @@
 
 Summary:	Private file sync and share server
 Name:		nextcloud
-Version:	28.0.2
+Version:	28.0.4
 Release:	1
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
 Source1:	apache.example.conf
@@ -57,6 +57,10 @@ Suggests:	libreoffice
 
 BuildArch:	noarch
 
+Requires(post):	%{_bindir}/runuser
+Requires(post):	php-cli
+Requires(post):	user(www)
+
 %description
 A personal cloud server which runs on you personal server 
 and enables accessing your data from everywhere and sharing 
@@ -91,6 +95,7 @@ Configuration files etc. for running NextCloud with the NGINX web server
 %files
 %doc AUTHORS 
 %attr(-,www,www) /srv/%{name}
+%ghost /srv/%{name}/updater/update-%{version}-%{release}.log
 %{_unitdir}/nextcloudcron.service
 %{_unitdir}/nextcloudcron.timer
 #--------------------------------------------------------------------
@@ -146,3 +151,10 @@ EOF
 # fix some attr
 find %{buildroot}/srv/nextcloud -type f -exec chmod 0644 {} \;
 find %{buildroot}/srv/nextcloud -type d -exec chmod 0755 {} \;
+
+%post
+if [ "$1" -ge 2 ]; then
+	pushd /srv/nextcloud &>/dev/null
+	runuser -u www -- %{_bindir}/php --define apc.enable_cli=1 ./occ upgrade &>updater/update-%{version}-%{release}.log
+	popd &>/dev/null
+fi
