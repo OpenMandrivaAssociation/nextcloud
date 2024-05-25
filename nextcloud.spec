@@ -1,6 +1,6 @@
 # based my build for stella. symbianflo
 
-%define _empty_manifest_terminate_build 0
+%undefine _debugsource_packages
 %if %{_use_internal_dependency_generator}
 %define __noautoreq /usr/bin/php
 %else
