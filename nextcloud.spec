@@ -1,6 +1,5 @@
 # based my build for stella. symbianflo
 
-%undefine _debugsource_packages
 %if %{_use_internal_dependency_generator}
 %define __noautoreq /usr/bin/php
 %else
@@ -9,7 +8,7 @@
 
 Summary:	Private file sync and share server
 Name:		nextcloud
-Version:	29.0.1
+Version:	29.0.2
 Release:	1
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
 Source1:	apache.example.conf
