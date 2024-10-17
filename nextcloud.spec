@@ -18,7 +18,7 @@ Source100:	%{name}.rpmlintrc
 
 License:	AGPLv3
 Group:		Monitoring
-Url:		http://nextcloud.com/
+Url:		https://nextcloud.com/
 
 # perl
 Requires:	perl(Locale::PO)
