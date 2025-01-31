@@ -6,11 +6,17 @@
 %define _requires_exceptions /usr/bin/php
 %endif
 
+%define beta rc2
+
 Summary:	Private file sync and share server
 Name:		nextcloud
-Version:	30.0.5
-Release:	1
+Version:	31.0.0
+Release:	%{?beta:0.%{beta}.}1
+%if 0%{?beta:1}
+Source0:	https://github.com/nextcloud/server/archive/refs/tags/v%{version}%{beta}.tar.gz
+%else
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
+%endif
 Source1:	apache.example.conf
 Source2:	nextcloud.conf
 Source3:	nextcloud-subdir.conf
@@ -102,16 +108,19 @@ Configuration files etc. for running NextCloud with the NGINX web server
 
 
 %prep
+%if 0%{?beta:1}
+%autosetup -p1 -n server-%{version}%{beta}
+%else
 %autosetup -p1 -n %{name}
+%endif
 
 %build
 
 %install
+BD="$(pwd)"
+
 mkdir -p %{buildroot}/srv
-(
-cd %{buildroot}/srv
-tar xf %{S:0}
-)
+cp -a ${BD} %{buildroot}/srv/nextcloud
 
 # install apache config file
 install -D -m 644 %{S:1}  %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
