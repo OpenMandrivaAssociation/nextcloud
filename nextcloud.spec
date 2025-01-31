@@ -13,7 +13,7 @@ Name:		nextcloud
 Version:	31.0.0
 Release:	%{?beta:0.%{beta}.}1
 %if 0%{?beta:1}
-Source0:	https://github.com/nextcloud/server/archive/refs/tags/v%{version}%{beta}.tar.gz
+Source0:	https://github.com/nextcloud/server/archive/refs/tags/v%{version}%{beta}.tar.xz
 %else
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
 %endif
