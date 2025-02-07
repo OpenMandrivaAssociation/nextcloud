@@ -6,14 +6,16 @@
 %define _requires_exceptions /usr/bin/php
 %endif
 
-%define beta rc2
+%define beta rc3
 
 Summary:	Private file sync and share server
 Name:		nextcloud
 Version:	31.0.0
 Release:	%{?beta:0.%{beta}.}1
 %if 0%{?beta:1}
-Source0:	https://github.com/nextcloud/server/archive/refs/tags/v%{version}%{beta}.tar.xz
+Source0:	https://github.com/nextcloud/server/archive/refs/tags/v%{version}%{beta}.tar.gz
+# Fun with submodules
+Source10:	https://github.com/nextcloud/3rdparty/archive/193aea74c1b026cbb5130af86a8c0af5c9d091d8.tar.gz
 %else
 Source0:	https://download.nextcloud.com/server/releases/%{name}-%{version}.tar.bz2
 %endif
@@ -110,6 +112,9 @@ Configuration files etc. for running NextCloud with the NGINX web server
 %prep
 %if 0%{?beta:1}
 %autosetup -p1 -n server-%{version}%{beta}
+tar xf %{S:10}
+rmdir 3rdparty
+mv 3rdparty-* 3rdparty
 %else
 %autosetup -p1 -n %{name}
 %endif
