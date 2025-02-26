@@ -6,7 +6,7 @@
 %define _requires_exceptions /usr/bin/php
 %endif
 
-%define beta rc3
+#define beta rc3
 
 Summary:	Private file sync and share server
 Name:		nextcloud

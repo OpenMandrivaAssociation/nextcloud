@@ -1,24 +1,2 @@
 sources:
-  v31.0.0rc3.tar.gz: cef71f3242f292cd8ec1591a702359d211b347a6
-  193aea74c1b026cbb5130af86a8c0af5c9d091d8.tar.gz: 576a747ab1b4a5a169c35245c7e32f205c3bfa4b
-  activity-31.0.0rc3.tar.gz: 5e2ffdb532446d824fac2b9652bf3d09cd743b36
-  app_api-31.0.0rc3.tar.gz: 6c91fbf4df4573b91b5ceb1dff0beff3493f7495
-  bruteforcesettings-31.0.0rc3.tar.gz: a919342da1d14d703070a1da88ae45f32421f337
-  circles-31.0.0rc3.tar.gz: d980ed1e04afacc444e66fc3bb7bb47b69906b77
-  files_downloadlimit-31.0.0rc3.tar.gz: f3f03cf778f08f615d808c9ea44c12d8091adaee
-  files_pdfviewer-31.0.0rc3.tar.gz: 90c394d26009aba3a2dd1ba3bdd19cd57e5787f1
-  firstrunwizard-31.0.0rc3.tar.gz: faf7de6a08c3eb23179021b6e93b1f387f2e7265
-  logreader-31.0.0rc3.tar.gz: 41485be9d5cc7d1c419492fe9835b81a8527c94d
-  nextcloud_announcements-31.0.0rc3.tar.gz: defda3eb7a62cff665b8db7174ceacf5cd78f774
-  notifications-31.0.0rc3.tar.gz: 6d169945ee87a1b0da32ab28930d579c365a0bc2
-  password_policy-31.0.0rc3.tar.gz: d69b8a56010fe5032245f9b6711a6033c5f56844
-  photos-31.0.0rc3.tar.gz: 46b777c17e376a932e91f6ca4df406c9cb8c8f26
-  privacy-31.0.0rc3.tar.gz: 7ef079a850cb793e3ab8f3b92d0c4d2049215d40
-  recommendations-31.0.0rc3.tar.gz: c386bc9bca66d51afefe4ecfa0e3cb4ea728b502
-  related_resources-31.0.0rc3.tar.gz: 0c9371ab246017ce8176692ba3badd9bbb59e9af
-  serverinfo-31.0.0rc3.tar.gz: d0d06a11fd31da95444849484b1718ab3276e231
-  survey_client-31.0.0rc3.tar.gz: 657b2c3cee4a9b10602b2334c1db952aeac10528
-  text-31.0.0rc3.tar.gz: c9d3a4f8a0d0733427fda835220c11563c6c1da2
-  viewer-31.0.0rc3.tar.gz: 5bad5d2c6f5544780652f6d763dd955dd93cfd45
-  nextcloud-photos-vendor.tar.xz: f3db6d2cecb69e77d30b926016676ac4f0a4fd02
-  support-30.0.5.tar.xz: af6dd9000d4108effc0eb956b307aa4ce74ae7bf
+  nextcloud-31.0.0.tar.bz2: 1002e7e8f5cb4f8f893550103afb9db004a4ad9e
