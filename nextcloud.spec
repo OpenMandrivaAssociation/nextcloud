@@ -10,13 +10,12 @@
 
 Summary:	Private file sync and share server
 Name:		nextcloud
-Version:	31.0.8
+Version:	31.0.9
 Release:	%{?beta:0.%{beta}.}1
 %if 0%{?beta:1}
 Source0:	https://github.com/nextcloud/server/archive/refs/tags/v%{version}%{beta}.tar.gz
 # Fun with submodules
 Source10:	https://github.com/nextcloud/3rdparty/archive/193aea74c1b026cbb5130af86a8c0af5c9d091d8.tar.gz
-# FIXME once 31.0.0 is released, make sure those are included in the official
 # release tarball
 %define apps activity app_api bruteforcesettings circles files_downloadlimit files_pdfviewer firstrunwizard logreader nextcloud_announcements notifications password_policy photos privacy recommendations related_resources serverinfo survey_client text viewer
 %(S=20; for i in %{apps}; do echo Source$S: "https://github.com/nextcloud/$i/archive/refs/tags/v%{version}%{beta}.tar.gz#/$i-%{version}%{beta}.tar.gz"; S=$((S+1)); done)
@@ -130,7 +129,7 @@ rmdir 3rdparty
 mv 3rdparty-* 3rdparty
 cd apps
 tar xf %{S:98}
-sed -i -e 's,max-version="30",max-version="31",g' support/appinfo/info.xml
+sed -i -e 's,max-version="31",max-version="32",g' support/appinfo/info.xml
 for i in %{apps}; do
 	tar xf %{_sourcedir}/$i-%{version}%{beta}.tar.gz
 	mv $i-%{version}%{beta} $i
