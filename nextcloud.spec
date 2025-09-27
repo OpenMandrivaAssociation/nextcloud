@@ -10,7 +10,7 @@
 
 Summary:	Private file sync and share server
 Name:		nextcloud
-Version:	31.0.9
+Version:	32.0.0
 Release:	%{?beta:0.%{beta}.}1
 %if 0%{?beta:1}
 Source0:	https://github.com/nextcloud/server/archive/refs/tags/v%{version}%{beta}.tar.gz
