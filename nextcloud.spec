@@ -11,7 +11,7 @@
 Summary:	Private file sync and share server
 Name:		nextcloud
 Version:	32.0.5
-Release:	%{?beta:0.%{beta}.}1
+Release:	%{?beta:0.%{beta}.}2
 %if 0%{?beta:1}
 Source0:	https://github.com/nextcloud/server/archive/refs/tags/v%{version}%{beta}.tar.gz
 # Fun with submodules
@@ -80,6 +80,9 @@ BuildArch:	noarch
 Requires(post):	%{_bindir}/runuser
 Requires(post):	php-cli
 Requires(post):	user(www)
+
+%patchlist
+nextcloud-32.0.5-php-8.5.patch
 
 %description
 A personal cloud server which runs on you personal server 
