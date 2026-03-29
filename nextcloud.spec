@@ -10,8 +10,8 @@
 
 Summary:	Private file sync and share server
 Name:		nextcloud
-Version:	32.0.5
-Release:	%{?beta:0.%{beta}.}2
+Version:	33.0.1
+Release:	%{?beta:0.%{beta}.}1
 %if 0%{?beta:1}
 Source0:	https://github.com/nextcloud/server/archive/refs/tags/v%{version}%{beta}.tar.gz
 # Fun with submodules
@@ -82,7 +82,6 @@ Requires(post):	php-cli
 Requires(post):	user(www)
 
 %patchlist
-nextcloud-32.0.5-php-8.5.patch
 
 %description
 A personal cloud server which runs on you personal server 
@@ -132,7 +131,7 @@ rmdir 3rdparty
 mv 3rdparty-* 3rdparty
 cd apps
 tar xf %{S:98}
-sed -i -e 's,max-version="31",max-version="32",g' support/appinfo/info.xml
+sed -i -e 's,max-version="31",max-version="33",g' support/appinfo/info.xml
 for i in %{apps}; do
 	tar xf %{_sourcedir}/$i-%{version}%{beta}.tar.gz
 	mv $i-%{version}%{beta} $i
