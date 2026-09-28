@@ -94,7 +94,6 @@ Group:		Servers
 # apache
 Requires:	config(apache-base)
 Requires:	config(apache-mod_php)
-Conflicts:	%{name}-nginx
 
 %description apache
 Configuration files etc. for running NextCloud with the Apache web server
@@ -105,9 +104,8 @@ Configuration files etc. for running NextCloud with the Apache web server
 %package nginx
 Summary:	Configuration files etc. for running NextCloud with the NGINX web server
 Group:		Servers
-Requires:	nginx
-Requires:	php-nginx
-Conflicts:	%{name}-apache
+Recommends:	nginx
+Recommends:	php-nginx
 
 %description nginx
 Configuration files etc. for running NextCloud with the NGINX web server
