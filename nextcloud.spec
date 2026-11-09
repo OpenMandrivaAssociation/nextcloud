@@ -11,7 +11,7 @@
 Summary:	Private file sync and share server
 Name:		nextcloud
 Version:	35.0.2
-Release:	%{?beta:0.%{beta}.}1
+Release:	%{?beta:0.%{beta}.}2
 %if 0%{?beta:1}
 Source0:	https://github.com/nextcloud/server/archive/refs/tags/v%{version}%{beta}.tar.gz
 # Fun with submodules
@@ -60,6 +60,9 @@ Requires:	config(php-pdo_sqlite)
 Requires:	config(php-pgsql)
 Requires:	config(php-ldap)
 Requires:	config(php-intl)
+# Password hashing uses Argon2id. The constants come from php-sodium;
+# without them, login fatals in lib/private/Security/Hasher.php.
+Requires:	config(php-sodium)
 Recommends:	php-bz2
 Recommends:	php-gmp
 Recommends:	php-bcmath
